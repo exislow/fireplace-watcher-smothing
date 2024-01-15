@@ -22,6 +22,8 @@ pre-commit = "^3.4.0"
 tox = "^4.11.1"
 
 
+[tool.poetry.scripts]
+main = "wallbox_control.main:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

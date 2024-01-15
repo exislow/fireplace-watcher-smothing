@@ -1,8 +1,9 @@
-import pigpio
 import time
 
+import pigpio
 
-def main():
+
+def main() -> None:
     # Definitions
     pin_status: int = 17
     pin_control: int = 18
@@ -15,21 +16,21 @@ def main():
     pi.set_pull_up_down(pin_status, pigpio.PUD_UP)
     pi.set_mode(pin_control, pigpio.OUTPUT)
     pi.set_pull_up_down(pin_control, pigpio.PUD_DOWN)
-    pi.write(pin_control, 1)
+    pi.write(pin_control, pigpio.HIGH)
 
     while True:
         # Read status
         status = pi.read(pin_status)
 
-        if status == 1:
-            pi.write(pin_control, 1)
-        elif status == 0:
+        if status == pigpio.HIGH:
+            pi.write(pin_control, pigpio.HIGH)
+        elif status == pigpio.LOW:
             # Wait and check if the status is still 0 afterwards.
             time.sleep(wait_sec)
             status = pi.read(pin_status)
 
-            if status == 0:
-                pi.write(pin_control, 0)
+            if status == pigpio.LOW:
+                pi.write(pin_control, pigpio.LOW)
 
         # Save CPU
         time.sleep(run_cycle_sec)
